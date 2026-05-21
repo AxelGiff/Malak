@@ -4,3 +4,8 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+axum = "0.8.9"
+reqwest = { version = "0.13.3", features = ["json"] }
+serde = { version = "1.0.228", features = ["derive"] }
+sysinfo = "0.39.2"
+tokio = { version = "1.52.3", features = ["macros", "net", "rt-multi-thread"] }
