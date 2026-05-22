@@ -1,2 +1,3 @@
 agent/target
 api/target
+.env
