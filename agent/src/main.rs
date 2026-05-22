@@ -1,39 +1,37 @@
 use reqwest::Client;
-use serde::Serialize;
-use sysinfo::System;
+use std::error::Error;
+use sysinfo::{System};
+use tokio::time::{sleep, Duration};
 
-#[derive(Debug, Serialize)]
-struct Metrics {
-    cpu: f32,
-    ram: u64,
-}
+mod metrics_info;
+
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<(), Box<dyn Error>> {
     let mut system = System::new_all();
+    loop {
+        system.refresh_all();
+        system.refresh_cpu_all();
 
-    system.refresh_all();
+        let metrics=metrics_info::get_metrics(&system);
 
-    let metrics = Metrics {
-        cpu: system.global_cpu_usage(),
-        ram: system.used_memory(),
-    };
-    loop{
-    send_metrics(&metrics).await;
-     tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
+        send_metrics(&metrics).await?;
+        sleep(Duration::from_secs(5)).await;
     }
-  
 }
-
-async fn send_metrics(metrics: &Metrics){
-  let client = Client::new();
+  
+async fn send_metrics(metrics: &metrics_info::Metrics) -> Result<(), Box<dyn Error>> {
+    let client = Client::new();
 
     let response = client
         .post("http://localhost:3000/metrics")
         .json(metrics)
         .send()
-        .await
-        .unwrap();
+        .await?;
 
     println!("Status: {}", response.status());
+
+    Ok(())
 }
+
+    
