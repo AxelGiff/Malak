@@ -22,7 +22,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
   
 async fn send_metrics(metrics: &metrics_info::Metrics) -> Result<(), Box<dyn Error>> {
     let client = Client::new();
-
+  //  println!("Sending metrics: {:?}", metrics);
     let response = client
         .post("http://localhost:3000/metrics")
         .json(metrics)
