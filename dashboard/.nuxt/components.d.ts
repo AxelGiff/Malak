@@ -14,6 +14,12 @@ type HydrationStrategies = {
 type LazyComponent<T> = DefineComponent<HydrationStrategies, {}, {}, {}, {}, {}, {}, { hydrated: () => void }> & T
 
 
+export const CpuComponent: typeof import("../app/components/Cpu/CpuComponent.vue")['default']
+export const CpuSubCpuComponent: typeof import("../app/components/Cpu/SubCpuComponent.vue")['default']
+export const DiskComponent: typeof import("../app/components/DiskComponent.vue")['default']
+export const MemoryComponent: typeof import("../app/components/MemoryComponent.vue")['default']
+export const Sidebar: typeof import("../app/components/Sidebar.vue")['default']
+export const ThemeToggle: typeof import("../app/components/ThemeToggle.vue")['default']
 export const NuxtWelcome: typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']
 export const NuxtLayout: typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
 export const NuxtErrorBoundary: typeof import("../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']
@@ -27,7 +33,17 @@ export const NuxtRouteAnnouncer: typeof import("../node_modules/nuxt/dist/app/co
 export const NuxtAnnouncer: typeof import("../node_modules/nuxt/dist/app/components/nuxt-announcer")['default']
 export const NuxtImg: typeof import("../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtImg']
 export const NuxtPicture: typeof import("../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtPicture']
-export const NuxtPage: typeof import("../node_modules/nuxt/dist/pages/runtime/page-placeholder")['default']
+export const AlertDialog: typeof import("../app/components/ui/alert-dialog/index")['AlertDialog']
+export const AlertDialogAction: typeof import("../app/components/ui/alert-dialog/index")['AlertDialogAction']
+export const AlertDialogCancel: typeof import("../app/components/ui/alert-dialog/index")['AlertDialogCancel']
+export const AlertDialogContent: typeof import("../app/components/ui/alert-dialog/index")['AlertDialogContent']
+export const AlertDialogDescription: typeof import("../app/components/ui/alert-dialog/index")['AlertDialogDescription']
+export const AlertDialogFooter: typeof import("../app/components/ui/alert-dialog/index")['AlertDialogFooter']
+export const AlertDialogHeader: typeof import("../app/components/ui/alert-dialog/index")['AlertDialogHeader']
+export const AlertDialogTitle: typeof import("../app/components/ui/alert-dialog/index")['AlertDialogTitle']
+export const AlertDialogTrigger: typeof import("../app/components/ui/alert-dialog/index")['AlertDialogTrigger']
+export const Button: typeof import("../app/components/ui/button/index")['Button']
+export const NuxtPage: typeof import("../node_modules/nuxt/dist/pages/runtime/page")['default']
 export const NoScript: typeof import("../node_modules/nuxt/dist/head/runtime/components")['NoScript']
 export const Link: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Link']
 export const Base: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Base']
@@ -38,6 +54,12 @@ export const Head: typeof import("../node_modules/nuxt/dist/head/runtime/compone
 export const Html: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Html']
 export const Body: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
 export const NuxtIsland: typeof import("../node_modules/nuxt/dist/app/components/nuxt-island")['default']
+export const LazyCpuComponent: LazyComponent<typeof import("../app/components/Cpu/CpuComponent.vue")['default']>
+export const LazyCpuSubCpuComponent: LazyComponent<typeof import("../app/components/Cpu/SubCpuComponent.vue")['default']>
+export const LazyDiskComponent: LazyComponent<typeof import("../app/components/DiskComponent.vue")['default']>
+export const LazyMemoryComponent: LazyComponent<typeof import("../app/components/MemoryComponent.vue")['default']>
+export const LazySidebar: LazyComponent<typeof import("../app/components/Sidebar.vue")['default']>
+export const LazyThemeToggle: LazyComponent<typeof import("../app/components/ThemeToggle.vue")['default']>
 export const LazyNuxtWelcome: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']>
 export const LazyNuxtLayout: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout")['default']>
 export const LazyNuxtErrorBoundary: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']>
@@ -51,7 +73,17 @@ export const LazyNuxtRouteAnnouncer: LazyComponent<typeof import("../node_module
 export const LazyNuxtAnnouncer: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-announcer")['default']>
 export const LazyNuxtImg: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtImg']>
 export const LazyNuxtPicture: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtPicture']>
-export const LazyNuxtPage: LazyComponent<typeof import("../node_modules/nuxt/dist/pages/runtime/page-placeholder")['default']>
+export const LazyAlertDialog: LazyComponent<typeof import("../app/components/ui/alert-dialog/index")['AlertDialog']>
+export const LazyAlertDialogAction: LazyComponent<typeof import("../app/components/ui/alert-dialog/index")['AlertDialogAction']>
+export const LazyAlertDialogCancel: LazyComponent<typeof import("../app/components/ui/alert-dialog/index")['AlertDialogCancel']>
+export const LazyAlertDialogContent: LazyComponent<typeof import("../app/components/ui/alert-dialog/index")['AlertDialogContent']>
+export const LazyAlertDialogDescription: LazyComponent<typeof import("../app/components/ui/alert-dialog/index")['AlertDialogDescription']>
+export const LazyAlertDialogFooter: LazyComponent<typeof import("../app/components/ui/alert-dialog/index")['AlertDialogFooter']>
+export const LazyAlertDialogHeader: LazyComponent<typeof import("../app/components/ui/alert-dialog/index")['AlertDialogHeader']>
+export const LazyAlertDialogTitle: LazyComponent<typeof import("../app/components/ui/alert-dialog/index")['AlertDialogTitle']>
+export const LazyAlertDialogTrigger: LazyComponent<typeof import("../app/components/ui/alert-dialog/index")['AlertDialogTrigger']>
+export const LazyButton: LazyComponent<typeof import("../app/components/ui/button/index")['Button']>
+export const LazyNuxtPage: LazyComponent<typeof import("../node_modules/nuxt/dist/pages/runtime/page")['default']>
 export const LazyNoScript: LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['NoScript']>
 export const LazyLink: LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Link']>
 export const LazyBase: LazyComponent<typeof import("../node_modules/nuxt/dist/head/runtime/components")['Base']>

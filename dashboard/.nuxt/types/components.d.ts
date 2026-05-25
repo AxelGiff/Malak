@@ -14,6 +14,12 @@ type HydrationStrategies = {
 type LazyComponent<T> = DefineComponent<HydrationStrategies, {}, {}, {}, {}, {}, {}, { hydrated: () => void }> & T
 
 interface _GlobalComponents {
+  CpuComponent: typeof import("../../app/components/Cpu/CpuComponent.vue")['default']
+  CpuSubCpuComponent: typeof import("../../app/components/Cpu/SubCpuComponent.vue")['default']
+  DiskComponent: typeof import("../../app/components/DiskComponent.vue")['default']
+  MemoryComponent: typeof import("../../app/components/MemoryComponent.vue")['default']
+  Sidebar: typeof import("../../app/components/Sidebar.vue")['default']
+  ThemeToggle: typeof import("../../app/components/ThemeToggle.vue")['default']
   NuxtWelcome: typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']
   NuxtLayout: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
   NuxtErrorBoundary: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']
@@ -27,7 +33,17 @@ interface _GlobalComponents {
   NuxtAnnouncer: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-announcer")['default']
   NuxtImg: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtImg']
   NuxtPicture: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtPicture']
-  NuxtPage: typeof import("../../node_modules/nuxt/dist/pages/runtime/page-placeholder")['default']
+  AlertDialog: typeof import("../../app/components/ui/alert-dialog/index")['AlertDialog']
+  AlertDialogAction: typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogAction']
+  AlertDialogCancel: typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogCancel']
+  AlertDialogContent: typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogContent']
+  AlertDialogDescription: typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogDescription']
+  AlertDialogFooter: typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogFooter']
+  AlertDialogHeader: typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogHeader']
+  AlertDialogTitle: typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogTitle']
+  AlertDialogTrigger: typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogTrigger']
+  Button: typeof import("../../app/components/ui/button/index")['Button']
+  NuxtPage: typeof import("../../node_modules/nuxt/dist/pages/runtime/page")['default']
   NoScript: typeof import("../../node_modules/nuxt/dist/head/runtime/components")['NoScript']
   Link: typeof import("../../node_modules/nuxt/dist/head/runtime/components")['Link']
   Base: typeof import("../../node_modules/nuxt/dist/head/runtime/components")['Base']
@@ -38,6 +54,12 @@ interface _GlobalComponents {
   Html: typeof import("../../node_modules/nuxt/dist/head/runtime/components")['Html']
   Body: typeof import("../../node_modules/nuxt/dist/head/runtime/components")['Body']
   NuxtIsland: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-island")['default']
+  LazyCpuComponent: LazyComponent<typeof import("../../app/components/Cpu/CpuComponent.vue")['default']>
+  LazyCpuSubCpuComponent: LazyComponent<typeof import("../../app/components/Cpu/SubCpuComponent.vue")['default']>
+  LazyDiskComponent: LazyComponent<typeof import("../../app/components/DiskComponent.vue")['default']>
+  LazyMemoryComponent: LazyComponent<typeof import("../../app/components/MemoryComponent.vue")['default']>
+  LazySidebar: LazyComponent<typeof import("../../app/components/Sidebar.vue")['default']>
+  LazyThemeToggle: LazyComponent<typeof import("../../app/components/ThemeToggle.vue")['default']>
   LazyNuxtWelcome: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']>
   LazyNuxtLayout: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-layout")['default']>
   LazyNuxtErrorBoundary: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-error-boundary.vue")['default']>
@@ -51,7 +73,17 @@ interface _GlobalComponents {
   LazyNuxtAnnouncer: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-announcer")['default']>
   LazyNuxtImg: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtImg']>
   LazyNuxtPicture: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtPicture']>
-  LazyNuxtPage: LazyComponent<typeof import("../../node_modules/nuxt/dist/pages/runtime/page-placeholder")['default']>
+  LazyAlertDialog: LazyComponent<typeof import("../../app/components/ui/alert-dialog/index")['AlertDialog']>
+  LazyAlertDialogAction: LazyComponent<typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogAction']>
+  LazyAlertDialogCancel: LazyComponent<typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogCancel']>
+  LazyAlertDialogContent: LazyComponent<typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogContent']>
+  LazyAlertDialogDescription: LazyComponent<typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogDescription']>
+  LazyAlertDialogFooter: LazyComponent<typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogFooter']>
+  LazyAlertDialogHeader: LazyComponent<typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogHeader']>
+  LazyAlertDialogTitle: LazyComponent<typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogTitle']>
+  LazyAlertDialogTrigger: LazyComponent<typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogTrigger']>
+  LazyButton: LazyComponent<typeof import("../../app/components/ui/button/index")['Button']>
+  LazyNuxtPage: LazyComponent<typeof import("../../node_modules/nuxt/dist/pages/runtime/page")['default']>
   LazyNoScript: LazyComponent<typeof import("../../node_modules/nuxt/dist/head/runtime/components")['NoScript']>
   LazyLink: LazyComponent<typeof import("../../node_modules/nuxt/dist/head/runtime/components")['Link']>
   LazyBase: LazyComponent<typeof import("../../node_modules/nuxt/dist/head/runtime/components")['Base']>
