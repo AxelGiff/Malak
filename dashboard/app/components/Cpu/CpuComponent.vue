@@ -2,8 +2,7 @@
 <template>
 	<div class="rounded-2xl border border-white/10 bg-slate-950/70 p-6 shadow-xl shadow-slate-950/30 backdrop-blur">
 		<div class="mb-6">
-			<p class="text-sm uppercase tracking-[0.3em] text-slate-400">CPU</p>
-			<p class="mt-1 text-2xl font-semibold text-white">Utilisation</p>
+			<p class="mt-1 text-2xl font-semibold text-white">CPU</p>
 		</div>
 
 		<div class="flex items-center gap-6">
