@@ -1,3 +1,4 @@
 agent/target
 api/target
 .env
+node_modules
