@@ -19,6 +19,7 @@ interface _GlobalComponents {
   DiskComponent: typeof import("../../app/components/DiskComponent.vue")['default']
   MemoryComponent: typeof import("../../app/components/Memory/MemoryComponent.vue")['default']
   MemorySubMemoryComponent: typeof import("../../app/components/Memory/SubMemoryComponent.vue")['default']
+  NetworkComponent: typeof import("../../app/components/Network/NetworkComponent.vue")['default']
   Sidebar: typeof import("../../app/components/ui/sidebar/index")['Sidebar']
   ThemeToggle: typeof import("../../app/components/ThemeToggle.vue")['default']
   NuxtWelcome: typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']
@@ -34,8 +35,6 @@ interface _GlobalComponents {
   NuxtAnnouncer: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-announcer")['default']
   NuxtImg: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtImg']
   NuxtPicture: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtPicture']
-  Button: typeof import("../../app/components/ui/button/index")['Button']
-  Input: typeof import("../../app/components/ui/input/index")['Input']
   AlertDialog: typeof import("../../app/components/ui/alert-dialog/index")['AlertDialog']
   AlertDialogAction: typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogAction']
   AlertDialogCancel: typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogCancel']
@@ -45,6 +44,18 @@ interface _GlobalComponents {
   AlertDialogHeader: typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogHeader']
   AlertDialogTitle: typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogTitle']
   AlertDialogTrigger: typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogTrigger']
+  Button: typeof import("../../app/components/ui/button/index")['Button']
+  Card: typeof import("../../app/components/ui/card/index")['Card']
+  CardAction: typeof import("../../app/components/ui/card/index")['CardAction']
+  CardContent: typeof import("../../app/components/ui/card/index")['CardContent']
+  CardDescription: typeof import("../../app/components/ui/card/index")['CardDescription']
+  CardFooter: typeof import("../../app/components/ui/card/index")['CardFooter']
+  CardHeader: typeof import("../../app/components/ui/card/index")['CardHeader']
+  CardTitle: typeof import("../../app/components/ui/card/index")['CardTitle']
+  Input: typeof import("../../app/components/ui/input/index")['Input']
+  Label: typeof import("../../app/components/ui/label/index")['Label']
+  Progress: typeof import("../../app/components/ui/progress/index")['Progress']
+  Separator: typeof import("../../app/components/ui/separator/index")['Separator']
   Sheet: typeof import("../../app/components/ui/sheet/index")['Sheet']
   SheetClose: typeof import("../../app/components/ui/sheet/index")['SheetClose']
   SheetContent: typeof import("../../app/components/ui/sheet/index")['SheetContent']
@@ -53,7 +64,6 @@ interface _GlobalComponents {
   SheetHeader: typeof import("../../app/components/ui/sheet/index")['SheetHeader']
   SheetTitle: typeof import("../../app/components/ui/sheet/index")['SheetTitle']
   SheetTrigger: typeof import("../../app/components/ui/sheet/index")['SheetTrigger']
-  Label: typeof import("../../app/components/ui/label/index")['Label']
   SidebarContent: typeof import("../../app/components/ui/sidebar/index")['SidebarContent']
   SidebarFooter: typeof import("../../app/components/ui/sidebar/index")['SidebarFooter']
   SidebarGroup: typeof import("../../app/components/ui/sidebar/index")['SidebarGroup']
@@ -77,18 +87,10 @@ interface _GlobalComponents {
   SidebarSeparator: typeof import("../../app/components/ui/sidebar/index")['SidebarSeparator']
   SidebarTrigger: typeof import("../../app/components/ui/sidebar/index")['SidebarTrigger']
   Skeleton: typeof import("../../app/components/ui/skeleton/index")['Skeleton']
-  Separator: typeof import("../../app/components/ui/separator/index")['Separator']
   Tooltip: typeof import("../../app/components/ui/tooltip/index")['Tooltip']
   TooltipContent: typeof import("../../app/components/ui/tooltip/index")['TooltipContent']
   TooltipProvider: typeof import("../../app/components/ui/tooltip/index")['TooltipProvider']
   TooltipTrigger: typeof import("../../app/components/ui/tooltip/index")['TooltipTrigger']
-  Card: typeof import("../../app/components/ui/card/index")['Card']
-  CardAction: typeof import("../../app/components/ui/card/index")['CardAction']
-  CardContent: typeof import("../../app/components/ui/card/index")['CardContent']
-  CardDescription: typeof import("../../app/components/ui/card/index")['CardDescription']
-  CardFooter: typeof import("../../app/components/ui/card/index")['CardFooter']
-  CardHeader: typeof import("../../app/components/ui/card/index")['CardHeader']
-  CardTitle: typeof import("../../app/components/ui/card/index")['CardTitle']
   NuxtPage: typeof import("../../node_modules/nuxt/dist/pages/runtime/page")['default']
   NoScript: typeof import("../../node_modules/nuxt/dist/head/runtime/components")['NoScript']
   Link: typeof import("../../node_modules/nuxt/dist/head/runtime/components")['Link']
@@ -105,6 +107,7 @@ interface _GlobalComponents {
   LazyDiskComponent: LazyComponent<typeof import("../../app/components/DiskComponent.vue")['default']>
   LazyMemoryComponent: LazyComponent<typeof import("../../app/components/Memory/MemoryComponent.vue")['default']>
   LazyMemorySubMemoryComponent: LazyComponent<typeof import("../../app/components/Memory/SubMemoryComponent.vue")['default']>
+  LazyNetworkComponent: LazyComponent<typeof import("../../app/components/Network/NetworkComponent.vue")['default']>
   LazySidebar: LazyComponent<typeof import("../../app/components/ui/sidebar/index")['Sidebar']>
   LazyThemeToggle: LazyComponent<typeof import("../../app/components/ThemeToggle.vue")['default']>
   LazyNuxtWelcome: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']>
@@ -120,8 +123,6 @@ interface _GlobalComponents {
   LazyNuxtAnnouncer: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-announcer")['default']>
   LazyNuxtImg: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtImg']>
   LazyNuxtPicture: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-stubs")['NuxtPicture']>
-  LazyButton: LazyComponent<typeof import("../../app/components/ui/button/index")['Button']>
-  LazyInput: LazyComponent<typeof import("../../app/components/ui/input/index")['Input']>
   LazyAlertDialog: LazyComponent<typeof import("../../app/components/ui/alert-dialog/index")['AlertDialog']>
   LazyAlertDialogAction: LazyComponent<typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogAction']>
   LazyAlertDialogCancel: LazyComponent<typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogCancel']>
@@ -131,6 +132,18 @@ interface _GlobalComponents {
   LazyAlertDialogHeader: LazyComponent<typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogHeader']>
   LazyAlertDialogTitle: LazyComponent<typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogTitle']>
   LazyAlertDialogTrigger: LazyComponent<typeof import("../../app/components/ui/alert-dialog/index")['AlertDialogTrigger']>
+  LazyButton: LazyComponent<typeof import("../../app/components/ui/button/index")['Button']>
+  LazyCard: LazyComponent<typeof import("../../app/components/ui/card/index")['Card']>
+  LazyCardAction: LazyComponent<typeof import("../../app/components/ui/card/index")['CardAction']>
+  LazyCardContent: LazyComponent<typeof import("../../app/components/ui/card/index")['CardContent']>
+  LazyCardDescription: LazyComponent<typeof import("../../app/components/ui/card/index")['CardDescription']>
+  LazyCardFooter: LazyComponent<typeof import("../../app/components/ui/card/index")['CardFooter']>
+  LazyCardHeader: LazyComponent<typeof import("../../app/components/ui/card/index")['CardHeader']>
+  LazyCardTitle: LazyComponent<typeof import("../../app/components/ui/card/index")['CardTitle']>
+  LazyInput: LazyComponent<typeof import("../../app/components/ui/input/index")['Input']>
+  LazyLabel: LazyComponent<typeof import("../../app/components/ui/label/index")['Label']>
+  LazyProgress: LazyComponent<typeof import("../../app/components/ui/progress/index")['Progress']>
+  LazySeparator: LazyComponent<typeof import("../../app/components/ui/separator/index")['Separator']>
   LazySheet: LazyComponent<typeof import("../../app/components/ui/sheet/index")['Sheet']>
   LazySheetClose: LazyComponent<typeof import("../../app/components/ui/sheet/index")['SheetClose']>
   LazySheetContent: LazyComponent<typeof import("../../app/components/ui/sheet/index")['SheetContent']>
@@ -139,7 +152,6 @@ interface _GlobalComponents {
   LazySheetHeader: LazyComponent<typeof import("../../app/components/ui/sheet/index")['SheetHeader']>
   LazySheetTitle: LazyComponent<typeof import("../../app/components/ui/sheet/index")['SheetTitle']>
   LazySheetTrigger: LazyComponent<typeof import("../../app/components/ui/sheet/index")['SheetTrigger']>
-  LazyLabel: LazyComponent<typeof import("../../app/components/ui/label/index")['Label']>
   LazySidebarContent: LazyComponent<typeof import("../../app/components/ui/sidebar/index")['SidebarContent']>
   LazySidebarFooter: LazyComponent<typeof import("../../app/components/ui/sidebar/index")['SidebarFooter']>
   LazySidebarGroup: LazyComponent<typeof import("../../app/components/ui/sidebar/index")['SidebarGroup']>
@@ -163,18 +175,10 @@ interface _GlobalComponents {
   LazySidebarSeparator: LazyComponent<typeof import("../../app/components/ui/sidebar/index")['SidebarSeparator']>
   LazySidebarTrigger: LazyComponent<typeof import("../../app/components/ui/sidebar/index")['SidebarTrigger']>
   LazySkeleton: LazyComponent<typeof import("../../app/components/ui/skeleton/index")['Skeleton']>
-  LazySeparator: LazyComponent<typeof import("../../app/components/ui/separator/index")['Separator']>
   LazyTooltip: LazyComponent<typeof import("../../app/components/ui/tooltip/index")['Tooltip']>
   LazyTooltipContent: LazyComponent<typeof import("../../app/components/ui/tooltip/index")['TooltipContent']>
   LazyTooltipProvider: LazyComponent<typeof import("../../app/components/ui/tooltip/index")['TooltipProvider']>
   LazyTooltipTrigger: LazyComponent<typeof import("../../app/components/ui/tooltip/index")['TooltipTrigger']>
-  LazyCard: LazyComponent<typeof import("../../app/components/ui/card/index")['Card']>
-  LazyCardAction: LazyComponent<typeof import("../../app/components/ui/card/index")['CardAction']>
-  LazyCardContent: LazyComponent<typeof import("../../app/components/ui/card/index")['CardContent']>
-  LazyCardDescription: LazyComponent<typeof import("../../app/components/ui/card/index")['CardDescription']>
-  LazyCardFooter: LazyComponent<typeof import("../../app/components/ui/card/index")['CardFooter']>
-  LazyCardHeader: LazyComponent<typeof import("../../app/components/ui/card/index")['CardHeader']>
-  LazyCardTitle: LazyComponent<typeof import("../../app/components/ui/card/index")['CardTitle']>
   LazyNuxtPage: LazyComponent<typeof import("../../node_modules/nuxt/dist/pages/runtime/page")['default']>
   LazyNoScript: LazyComponent<typeof import("../../node_modules/nuxt/dist/head/runtime/components")['NoScript']>
   LazyLink: LazyComponent<typeof import("../../node_modules/nuxt/dist/head/runtime/components")['Link']>
