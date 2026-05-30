@@ -79,7 +79,7 @@ import { Home, LayoutDashboard, Monitor, View } from '@lucide/vue'
       <SidebarRail />
     </Sidebar>
     <SidebarInset>
-      <header class="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+      <header class="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
         <div class="flex items-center gap-2 px-4">
           <SidebarTrigger class="-ml-1" />
         </div>
@@ -88,12 +88,17 @@ import { Home, LayoutDashboard, Monitor, View } from '@lucide/vue'
         </div>
       </header>
       <div class="flex flex-1 flex-col gap-4 p-4 pt-0">
-        <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-          <div class="aspect-video rounded-xl bg-muted/50" ><CpuComponent :usage="53" /></div>
-          <div class="aspect-video rounded-xl bg-muted/50" ><MemoryComponent :usage="68" /> </div>
-           <div class="aspect-video rounded-xl bg-muted/50" > <NetworkComponent /> </div>
+        <div class="grid flex-1 gap-4 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
+          <div class="flex flex-col gap-4">
+            <GlobalDataComponent class="w-full" />
+            <CpuComponent :usage="53" class="h-full w-full" />
+          </div>
+          <div class="flex flex-col gap-4">
+            <MemoryComponent :usage="68" class="w-full" />
+            <DiskComponent class="w-full" />
+            <NetworkComponent class="w-full" />
+          </div>
         </div>
-        <div class="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
       </div>
     </SidebarInset>
   </SidebarProvider>
