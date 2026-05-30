@@ -18,16 +18,16 @@
       </DropdownMenuContent>
     </DropdownMenu>
   </DefineTemplate>
-    <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-6 shadow-xl shadow-slate-950/30 backdrop-blur">
-        <div class="mb-6">
-			<p class="mt-1 text-2xl font-semibold text-white">RÉSEAUX</p>
+    <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-4 font-sans shadow-xl shadow-slate-950/30 backdrop-blur">
+        <div class="mb-3">
+      <p class="mt-1 text-base font-semibold tracking-[0.08em] text-white">RÉSEAUX</p>
         </div>
 
     <div class="rounded-md ">
       <Table>
         <TableHeader>
           <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
-            <TableHead v-for="header in headerGroup.headers" :key="header.id" class="text-center">
+            <TableHead v-for="header in headerGroup.headers" :key="header.id" class="text-center text-[0.7rem] uppercase tracking-[0.08em] text-slate-400">
               <FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.header" :props="header.getContext()" />
             </TableHead>
           </TableRow>
@@ -36,7 +36,7 @@
           <template v-if="table.getRowModel().rows?.length">
             <template v-for="row in table.getRowModel().rows" :key="row.id">
               <TableRow :data-state="row.getIsSelected() && 'selected'">
-                <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id" class="text-center">
+                <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id" class="text-center text-xs text-slate-100">
                   <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
                 </TableCell>
               </TableRow>
@@ -51,7 +51,7 @@
           <TableRow v-else>
             <TableCell
               :colspan="columns.length"
-              class="h-24 text-center"
+              class="h-20 text-center text-xs text-slate-400"
             >
               Pas d'interfaces trouvées.
             </TableCell>
@@ -60,8 +60,8 @@
       </Table>
     </div>
 
-    <div class="flex items-center space-x-2 mt-13 justify-end">
-      <Button class="w-full flex cursor-pointer justify-between" variant="secondary">
+    <div class="mt-auto flex items-end pt-3">
+      <Button class="flex w-full cursor-pointer justify-between rounded-xl bg-slate-900/80 px-4 py-2 text-sm font-medium text-slate-100 hover:bg-slate-900" variant="secondary">
     Voir toutes les interfaces
     <MoveRight /> 
   </Button>

@@ -16,7 +16,8 @@ type LazyComponent<T> = DefineComponent<HydrationStrategies, {}, {}, {}, {}, {},
 interface _GlobalComponents {
   CpuComponent: typeof import("../../app/components/Cpu/CpuComponent.vue")['default']
   CpuSubCpuComponent: typeof import("../../app/components/Cpu/SubCpuComponent.vue")['default']
-  DiskComponent: typeof import("../../app/components/DiskComponent.vue")['default']
+  DiskComponent: typeof import("../../app/components/Disk/DiskComponent.vue")['default']
+  GlobalDataComponent: typeof import("../../app/components/GlobalData/GlobalDataComponent.vue")['default']
   MemoryComponent: typeof import("../../app/components/Memory/MemoryComponent.vue")['default']
   MemorySubMemoryComponent: typeof import("../../app/components/Memory/SubMemoryComponent.vue")['default']
   NetworkComponent: typeof import("../../app/components/Network/NetworkComponent.vue")['default']
@@ -52,8 +53,24 @@ interface _GlobalComponents {
   CardFooter: typeof import("../../app/components/ui/card/index")['CardFooter']
   CardHeader: typeof import("../../app/components/ui/card/index")['CardHeader']
   CardTitle: typeof import("../../app/components/ui/card/index")['CardTitle']
-  Input: typeof import("../../app/components/ui/input/index")['Input']
+  Checkbox: typeof import("../../app/components/ui/checkbox/index")['Checkbox']
+  DropdownMenu: typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenu']
+  DropdownMenuCheckboxItem: typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuCheckboxItem']
+  DropdownMenuContent: typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuContent']
+  DropdownMenuGroup: typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuGroup']
+  DropdownMenuItem: typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuItem']
+  DropdownMenuLabel: typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuLabel']
+  DropdownMenuRadioGroup: typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuRadioGroup']
+  DropdownMenuRadioItem: typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuRadioItem']
+  DropdownMenuSeparator: typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuSeparator']
+  DropdownMenuShortcut: typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuShortcut']
+  DropdownMenuSub: typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuSub']
+  DropdownMenuSubContent: typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuSubContent']
+  DropdownMenuSubTrigger: typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuSubTrigger']
+  DropdownMenuTrigger: typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuTrigger']
+  DropdownMenuPortal: typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuPortal']
   Label: typeof import("../../app/components/ui/label/index")['Label']
+  Input: typeof import("../../app/components/ui/input/index")['Input']
   Progress: typeof import("../../app/components/ui/progress/index")['Progress']
   Separator: typeof import("../../app/components/ui/separator/index")['Separator']
   Sheet: typeof import("../../app/components/ui/sheet/index")['Sheet']
@@ -87,6 +104,15 @@ interface _GlobalComponents {
   SidebarSeparator: typeof import("../../app/components/ui/sidebar/index")['SidebarSeparator']
   SidebarTrigger: typeof import("../../app/components/ui/sidebar/index")['SidebarTrigger']
   Skeleton: typeof import("../../app/components/ui/skeleton/index")['Skeleton']
+  Table: typeof import("../../app/components/ui/table/index")['Table']
+  TableBody: typeof import("../../app/components/ui/table/index")['TableBody']
+  TableCaption: typeof import("../../app/components/ui/table/index")['TableCaption']
+  TableCell: typeof import("../../app/components/ui/table/index")['TableCell']
+  TableEmpty: typeof import("../../app/components/ui/table/index")['TableEmpty']
+  TableFooter: typeof import("../../app/components/ui/table/index")['TableFooter']
+  TableHead: typeof import("../../app/components/ui/table/index")['TableHead']
+  TableHeader: typeof import("../../app/components/ui/table/index")['TableHeader']
+  TableRow: typeof import("../../app/components/ui/table/index")['TableRow']
   Tooltip: typeof import("../../app/components/ui/tooltip/index")['Tooltip']
   TooltipContent: typeof import("../../app/components/ui/tooltip/index")['TooltipContent']
   TooltipProvider: typeof import("../../app/components/ui/tooltip/index")['TooltipProvider']
@@ -104,7 +130,8 @@ interface _GlobalComponents {
   NuxtIsland: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-island")['default']
   LazyCpuComponent: LazyComponent<typeof import("../../app/components/Cpu/CpuComponent.vue")['default']>
   LazyCpuSubCpuComponent: LazyComponent<typeof import("../../app/components/Cpu/SubCpuComponent.vue")['default']>
-  LazyDiskComponent: LazyComponent<typeof import("../../app/components/DiskComponent.vue")['default']>
+  LazyDiskComponent: LazyComponent<typeof import("../../app/components/Disk/DiskComponent.vue")['default']>
+  LazyGlobalDataComponent: LazyComponent<typeof import("../../app/components/GlobalData/GlobalDataComponent.vue")['default']>
   LazyMemoryComponent: LazyComponent<typeof import("../../app/components/Memory/MemoryComponent.vue")['default']>
   LazyMemorySubMemoryComponent: LazyComponent<typeof import("../../app/components/Memory/SubMemoryComponent.vue")['default']>
   LazyNetworkComponent: LazyComponent<typeof import("../../app/components/Network/NetworkComponent.vue")['default']>
@@ -140,8 +167,24 @@ interface _GlobalComponents {
   LazyCardFooter: LazyComponent<typeof import("../../app/components/ui/card/index")['CardFooter']>
   LazyCardHeader: LazyComponent<typeof import("../../app/components/ui/card/index")['CardHeader']>
   LazyCardTitle: LazyComponent<typeof import("../../app/components/ui/card/index")['CardTitle']>
-  LazyInput: LazyComponent<typeof import("../../app/components/ui/input/index")['Input']>
+  LazyCheckbox: LazyComponent<typeof import("../../app/components/ui/checkbox/index")['Checkbox']>
+  LazyDropdownMenu: LazyComponent<typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenu']>
+  LazyDropdownMenuCheckboxItem: LazyComponent<typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuCheckboxItem']>
+  LazyDropdownMenuContent: LazyComponent<typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuContent']>
+  LazyDropdownMenuGroup: LazyComponent<typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuGroup']>
+  LazyDropdownMenuItem: LazyComponent<typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuItem']>
+  LazyDropdownMenuLabel: LazyComponent<typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuLabel']>
+  LazyDropdownMenuRadioGroup: LazyComponent<typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuRadioGroup']>
+  LazyDropdownMenuRadioItem: LazyComponent<typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuRadioItem']>
+  LazyDropdownMenuSeparator: LazyComponent<typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuSeparator']>
+  LazyDropdownMenuShortcut: LazyComponent<typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuShortcut']>
+  LazyDropdownMenuSub: LazyComponent<typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuSub']>
+  LazyDropdownMenuSubContent: LazyComponent<typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuSubContent']>
+  LazyDropdownMenuSubTrigger: LazyComponent<typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuSubTrigger']>
+  LazyDropdownMenuTrigger: LazyComponent<typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuTrigger']>
+  LazyDropdownMenuPortal: LazyComponent<typeof import("../../app/components/ui/dropdown-menu/index")['DropdownMenuPortal']>
   LazyLabel: LazyComponent<typeof import("../../app/components/ui/label/index")['Label']>
+  LazyInput: LazyComponent<typeof import("../../app/components/ui/input/index")['Input']>
   LazyProgress: LazyComponent<typeof import("../../app/components/ui/progress/index")['Progress']>
   LazySeparator: LazyComponent<typeof import("../../app/components/ui/separator/index")['Separator']>
   LazySheet: LazyComponent<typeof import("../../app/components/ui/sheet/index")['Sheet']>
@@ -175,6 +218,15 @@ interface _GlobalComponents {
   LazySidebarSeparator: LazyComponent<typeof import("../../app/components/ui/sidebar/index")['SidebarSeparator']>
   LazySidebarTrigger: LazyComponent<typeof import("../../app/components/ui/sidebar/index")['SidebarTrigger']>
   LazySkeleton: LazyComponent<typeof import("../../app/components/ui/skeleton/index")['Skeleton']>
+  LazyTable: LazyComponent<typeof import("../../app/components/ui/table/index")['Table']>
+  LazyTableBody: LazyComponent<typeof import("../../app/components/ui/table/index")['TableBody']>
+  LazyTableCaption: LazyComponent<typeof import("../../app/components/ui/table/index")['TableCaption']>
+  LazyTableCell: LazyComponent<typeof import("../../app/components/ui/table/index")['TableCell']>
+  LazyTableEmpty: LazyComponent<typeof import("../../app/components/ui/table/index")['TableEmpty']>
+  LazyTableFooter: LazyComponent<typeof import("../../app/components/ui/table/index")['TableFooter']>
+  LazyTableHead: LazyComponent<typeof import("../../app/components/ui/table/index")['TableHead']>
+  LazyTableHeader: LazyComponent<typeof import("../../app/components/ui/table/index")['TableHeader']>
+  LazyTableRow: LazyComponent<typeof import("../../app/components/ui/table/index")['TableRow']>
   LazyTooltip: LazyComponent<typeof import("../../app/components/ui/tooltip/index")['Tooltip']>
   LazyTooltipContent: LazyComponent<typeof import("../../app/components/ui/tooltip/index")['TooltipContent']>
   LazyTooltipProvider: LazyComponent<typeof import("../../app/components/ui/tooltip/index")['TooltipProvider']>

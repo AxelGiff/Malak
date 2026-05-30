@@ -1,13 +1,13 @@
 
 <template>
-    <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-6 shadow-xl shadow-slate-950/30 backdrop-blur">
-        <div class="mb-6">
-			<p class="mt-1 text-2xl font-semibold text-white">MÉMOIRE</p>
+    <div class="rounded-2xl border border-white/10 bg-slate-950/70 px-4 pt-4 pb-10 font-sans shadow-xl shadow-slate-950/30 backdrop-blur">
+        <div class="mb-3">
+            <p class="mt-1 text-base font-semibold tracking-[0.08em] text-white">MÉMOIRE</p>
         </div>
 
-        <div class="flex items-center gap-6">
+        <div class="flex items-center gap-5">
             <div class="relative flex shrink-0 items-center justify-center">
-            <svg class="h-48 w-48 -rotate-90" viewBox="0 0 120 120" aria-label="Jauge Mémoire">
+            <svg class="h-36 w-36 -rotate-90" viewBox="0 0 120 120" aria-label="Jauge Mémoire">
                 <circle
                     cx="60"
                     cy="60"
@@ -31,8 +31,8 @@
             </svg>
 
             <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <span :class="['text-5xl font-bold tabular-nums', colorClass]">{{ clampedUsage }}%</span>
-                <span class="mt-2 text-sm text-slate-400">Utilisée</span>
+                <span :class="['text-[1.8rem] font-bold tabular-nums leading-none', colorClass]">{{ clampedUsage }}%</span>
+                <span class="mt-1 text-[0.72rem] tracking-wide text-slate-400">Utilisée</span>
             </div>
             </div>
             
@@ -41,14 +41,14 @@
                     <SubMemoryComponent />
             </div>
         </div>
-        <div> 
-            <div class="flex justify-between items-center gap-4 mt-6"> 
-        <h1 class="mb-1">Swap</h1>
-        <p class="border w-full bg-slate-200/10 rounded-lg"> </p>
-        <p class="mb-1"> 0% </p>
+                <div class="mt-7">
+                        <div class="mt-4 flex items-center gap-3 text-sm text-slate-300"> 
+                <h1 class="mb-0.5 text-xs font-medium text-slate-200">Swap</h1>
+        <p class="h-px w-full bg-slate-200/10 rounded-lg"> </p>
+                <p class="mb-0.5 text-xs text-slate-200">0%</p>
         </div>
-          <Progress :model-value="progress" class="w-[100%]" />
-        <p>0 o / 2.00 Go</p>
+          <Progress :model-value="progress" class="w-full" />
+        <p class="mt-1 text-xs text-slate-400">0 o / 2.00 Go</p>
 </div>
     </div>
 </template>
