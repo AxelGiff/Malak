@@ -38,7 +38,7 @@
             
             <div class="min-w-0 flex-1">
             
-                    <SubMemoryComponent />
+                    <SubMemoryComponent  :data="props.data" />
             </div>
         </div>
                 <div class="mt-7">
@@ -60,6 +60,13 @@ import { Progress } from '@/components/ui/progress'
 
 import SubMemoryComponent from  '@/components/Memory/SubMemoryComponent.vue'
 
+type MemoryData = {
+    total: number
+    used: number
+    free: number
+    available: number
+}
+
 
 const progress = ref(13)
 onMounted(() => {
@@ -71,7 +78,8 @@ onMounted(() => {
 
 
 const props = withDefaults(defineProps<{
-    usage?: number
+    usage?: number,
+    data: MemoryData,
 }>(), {
     usage: 0,
 })

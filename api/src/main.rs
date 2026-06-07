@@ -5,6 +5,9 @@ use std::env;
 use db::connect;
 mod insertPayload;
 mod models;
+use tower_http::cors::CorsLayer;
+use http::{header, HeaderValue, Method};
+
 
 fn build_database_url() -> String {
     if let Ok(url) = env::var("DATABASE_URL") {
@@ -30,16 +33,24 @@ async fn main() {
     let pool = connect(&database_url).await;
     let state = insertPayload::AppState { db: pool };
 
-
+    let cors = CorsLayer::new()
+        .allow_origin("http://localhost:3000".parse::<HeaderValue>().unwrap())
+        .allow_methods([Method::GET, Method::POST, Method::OPTIONS])
+        .allow_headers([
+            header::CONTENT_TYPE,
+            header::AUTHORIZATION,
+            header::ACCEPT,
+        ]);
     // build our application with a single route
     let app = Router::new()
     .route("/", get(|| async { "Hello, World!" }))
     .route("/metrics", post(insertPayload::insert_to_db))
     .route("/metrics/latest", get(models::get_latest_metrics))
     .route("/machines", get(models::get_machines))
-    .with_state(state);
+    .with_state(state)
+    .layer(cors);
 
-    // run our app with hyper, listening globally on port 3000
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    // run our app with hyper, listening globally on port 8000
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8000").await.unwrap();
     axum::serve(listener, app).await.unwrap();
 }
