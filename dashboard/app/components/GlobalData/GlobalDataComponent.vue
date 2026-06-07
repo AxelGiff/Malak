@@ -25,19 +25,33 @@
 </template>
 
 <script setup lang="ts">
+
+
+type MonitorData = {
+  hostname: string
+  os: string
+  os_version: string
+  uptime: number
+  nombre_processeurs: number
+  nombre_processus: number
+}
+
 type SystemRow = {
   label: string
   value: string
   icon: string
 }
+const props = defineProps<{
+  data: MonitorData
+}>()
 
 const globalData = {
-  nom_machine: 'DESKTOP-90OIQRQ',
-  nombre_processeurs: 16,
-  nombre_processus: 298,
-  systeme_exploitation: 'Windows',
-  uptime: 11748,
-  version_systeme: '11 (26200)',
+  nom_machine: props.data.hostname,
+  nombre_processeurs: props.data.nombre_processeurs,
+  nombre_processus: props.data.nombre_processus,
+  systeme_exploitation: props.data.os,
+  uptime: props.data.uptime,
+  version_systeme: props.data.os_version,
 }
 
 function formatUptime(totalSeconds: number) {
@@ -68,8 +82,8 @@ const systemRows: SystemRow[] = [
     icon: 'M4 7h16M4 12h16M4 17h16',
   },
   {
-    label: 'Architecture',
-    value: 'x64',
+    label: 'Nombre de processus',
+    value: String(globalData.nombre_processus),
     icon: 'M9 3h6M9 21h6M3 9v6M21 9v6M6 6h12v12H6z',
   },
   {
@@ -79,7 +93,7 @@ const systemRows: SystemRow[] = [
   },
   {
     label: 'Temps de démarrage',
-    value: '11/05/2024 10:35:12',
+    value: formatUptime(globalData.uptime),
     icon: 'M12 6v6l4 2M12 3a9 9 0 1 0 9 9',
   },
 ]
