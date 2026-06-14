@@ -13,11 +13,11 @@ pub struct GlobalData {
 
 #[derive(Debug, Serialize)]
 pub struct MemoryData {
-    pub total: u64,
-    pub used: u64,
-    pub free: u64,
-    pub total_swap: u64,
-    pub used_swap: u64,
+    pub total: f64,
+    pub used: f64,
+    pub free: f64,
+    pub total_swap: f64,
+    pub used_swap: f64,
 }
 
 
@@ -96,12 +96,13 @@ pub fn get_disk_info() -> Vec<DiskData> {
 }
 
 pub fn get_memory_info(system: &System) -> MemoryData {
+
     MemoryData {
-        total: system.total_memory(),
-        used: system.used_memory(),
-        free: system.available_memory(),
-        total_swap: system.total_swap(),
-        used_swap: system.used_swap(),
+        total: bytes_to_go(system.total_memory()),
+        used: bytes_to_go(system.used_memory()),
+        free: bytes_to_go(system.available_memory()),
+        total_swap: bytes_to_go(system.total_swap()),
+        used_swap: bytes_to_go(system.used_swap()),
     }
 }
 
@@ -149,4 +150,8 @@ pub fn get_metrics(system: &System) -> Metrics {
         disks,
         networks,
     }
+}
+
+pub fn bytes_to_go(bytes: u64) -> f64{
+    return bytes as f64/ (1024.0 * 1024.0 * 1024.0);
 }

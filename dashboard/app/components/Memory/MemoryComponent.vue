@@ -45,10 +45,10 @@
                         <div class="mt-4 flex items-center gap-3 text-sm text-slate-300"> 
                 <h1 class="mb-0.5 text-xs font-medium text-slate-200">Swap</h1>
         <p class="h-px w-full bg-slate-200/10 rounded-lg"> </p>
-                <p class="mb-0.5 text-xs text-slate-200">0%</p>
+                <p class="mb-0.5 text-xs text-slate-200">{{props.data.swap_usage_percent.toFixed(2)}}%</p>
         </div>
           <Progress :model-value="progress" class="w-full" />
-        <p class="mt-1 text-xs text-slate-400">0 o / 2.00 Go</p>
+        <p class="mt-1 text-xs text-slate-400">{{props.data.used_swap.toFixed(2)}} / {{props.data.total_swap.toFixed(2)}} Go</p>
 </div>
     </div>
 </template>
@@ -64,6 +64,9 @@ type MemoryData = {
     total: number
     used: number
     free: number
+    used_swap:number
+    total_swap:number
+    swap_usage_percent:number
     available: number
 }
 
@@ -71,7 +74,7 @@ type MemoryData = {
 const progress = ref(13)
 onMounted(() => {
   const timer = setTimeout(() => {
-    progress.value = 66
+    progress.value = props.data.swap_usage_percent
   }, 500)
   return () => clearTimeout(timer)
 })
@@ -85,7 +88,7 @@ const props = withDefaults(defineProps<{
 })
 
 const clampedUsage = computed(() => Math.min(100, Math.max(0, props.usage)))
-
+console.log(props.data);
 const colorClass = computed(() => {
     if (clampedUsage.value >= 80) return 'text-red-500'
     if (clampedUsage.value >= 70) return 'text-orange-400'
