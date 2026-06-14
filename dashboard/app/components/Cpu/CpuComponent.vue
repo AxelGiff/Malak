@@ -12,7 +12,6 @@
 				<span>Voir en graphique</span>
 			</button>
 		</div>
-
 		<div class="grid flex-1 gap-6 lg:grid-cols-[20rem_minmax(0,1fr)]">
 			<div class="flex flex-col items-start gap-5">
 				<div class="mx-auto flex w-full max-w-[20rem] flex-col items-center rounded-2xl border border-white/10 bg-white/5 p-5 text-center">
@@ -61,16 +60,34 @@
 			</div>
 
 			<div class="grid gap-3 lg:grid-cols-2 lg:gap-0">
-				<div v-for="(column, index) in cpuColumns" :key="column.id" class="space-y-3 lg:px-4" :class="index === 0 ? 'lg:border-r lg:border-white/10 lg:pl-0 lg:pr-4' : 'lg:pl-4 lg:pr-0'">
-					<div v-for="core in column.cores" :key="core.name" class="flex items-center gap-4 text-sm">
-						<span class="w-12 text-right text-slate-200">{{ core.name }}</span>
+				<div
+					v-for="(column, index) in cpuColumns"
+					:key="column.id"
+					class="space-y-3 lg:px-4"
+					:class="index === 0
+						? 'lg:border-r lg:border-white/10 lg:pl-0 lg:pr-4'
+						: 'lg:pl-4 lg:pr-0'"
+				>
+					<div
+						v-for="core in column.cores"
+						:key="core.id"
+						class="flex items-center gap-4 text-sm"
+					>
+						<span class="w-12 text-right text-slate-200">
+							{{ core.nom_cpu }}
+						</span>
+
 						<div class="flex min-w-0 flex-1 items-center gap-3">
 							<Progress
-								:model-value="core.usage"
+								:model-value="core.utilisation"
 								class="h-2 flex-1 bg-slate-800/80"
-								:indicator-class="core.indicatorClass"
+								:indicator-class="progressColor(core.usage)"
+
 							/>
-							<span class="w-16 text-right tabular-nums" :class="core.valueClass">{{ core.label }}</span>
+
+							<span class="w-16 text-right tabular-nums text-slate-300">
+								{{ core.usage.toFixed(2) }}%
+							</span>
 						</div>
 					</div>
 				</div>
@@ -93,9 +110,11 @@ type Core = {
 }
 
 const props = withDefaults(defineProps<{
-	usage?: number
+	usage?: number,
+	cpuHearts?: Array<Record<string, unknown>>,
 }>(), {
 	usage: 0,
+	
 })
 
 const clampedUsage = computed(() => Math.min(100, Math.max(0, props.usage)))
@@ -119,27 +138,27 @@ const arcDashoffset = computed(() => {
 	return arcLength - (clampedUsage.value / 100) * arcLength
 })
 
-const cores: Core[] = [
-	{ name: 'CPU 1', usage: 53.04, label: '53.04%', indicatorClass: 'bg-violet-500', valueClass: 'text-slate-300' },
-	{ name: 'CPU 2', usage: 24.10, label: '24.10%', indicatorClass: 'bg-violet-500', valueClass: 'text-slate-300' },
-	{ name: 'CPU 3', usage: 32.70, label: '32.70%', indicatorClass: 'bg-violet-500', valueClass: 'text-slate-300' },
-	{ name: 'CPU 4', usage: 18.13, label: '18.13%', indicatorClass: 'bg-violet-500', valueClass: 'text-slate-300' },
-	{ name: 'CPU 5', usage: 84.42, label: '84.42%', indicatorClass: 'bg-rose-500', valueClass: 'text-rose-400' },
-	{ name: 'CPU 6', usage: 16.74, label: '16.74%', indicatorClass: 'bg-violet-500', valueClass: 'text-slate-300' },
-	{ name: 'CPU 7', usage: 18.97, label: '18.97%', indicatorClass: 'bg-violet-500', valueClass: 'text-slate-300' },
-	{ name: 'CPU 8', usage: 39.16, label: '39.16%', indicatorClass: 'bg-violet-500', valueClass: 'text-slate-300' },
-	{ name: 'CPU 9', usage: 17.23, label: '17.23%', indicatorClass: 'bg-violet-500', valueClass: 'text-slate-300' },
-	{ name: 'CPU 10', usage: 15.65, label: '15.65%', indicatorClass: 'bg-violet-500', valueClass: 'text-slate-300' },
-	{ name: 'CPU 11', usage: 15.35, label: '15.35%', indicatorClass: 'bg-violet-500', valueClass: 'text-slate-300' },
-	{ name: 'CPU 12', usage: 15.09, label: '15.09%', indicatorClass: 'bg-violet-500', valueClass: 'text-slate-300' },
-	{ name: 'CPU 13', usage: 12.41, label: '12.41%', indicatorClass: 'bg-violet-500', valueClass: 'text-slate-300' },
-	{ name: 'CPU 14', usage: 13.17, label: '13.17%', indicatorClass: 'bg-violet-500', valueClass: 'text-slate-300' },
-	{ name: 'CPU 15', usage: 14.90, label: '14.90%', indicatorClass: 'bg-violet-500', valueClass: 'text-slate-300' },
-	{ name: 'CPU 16', usage: 12.32, label: '12.32%', indicatorClass: 'bg-violet-500', valueClass: 'text-slate-300' },
-]
 
-const cpuColumns = computed(() => [
-	{ id: 'left', cores: cores.slice(0, 8) },
-	{ id: 'right', cores: cores.slice(8) },
-])
+function progressColor(usage: number): string {
+  if (usage >= 80) return 'bg-[#ef4444]'
+  if (usage >= 70) return 'bg-[#fb923c]'
+  return 'bg-[#38bdf8]'
+}
+const cpuColumns = computed(() => {
+  const cpus = (props.cpuHearts ?? []) as any[]
+
+  const enriched = cpus.map((cpu) => ({
+    id: cpu.id,
+    nom_cpu: cpu.nom_cpu,
+    usage: Number(cpu.usage ?? cpu.utilisation ?? 0),
+    utilisation: Number(cpu.utilisation ?? cpu.usage ?? 0),
+  }))
+
+  const mid = Math.ceil(enriched.length / 2)
+
+  return [
+    { id: 'left', cores: enriched.slice(0, mid) },
+    { id: 'right', cores: enriched.slice(mid) },
+  ]
+})
 </script>

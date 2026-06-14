@@ -93,7 +93,7 @@
 </div>
 
         <div class="ml-auto flex items-center gap-2 px-4">
-           <Button class="cursor-pointer" variant="outline" size="sm">
+           <Button class="cursor-pointer" variant="outline" @click="refresh" size="sm" :disabled="disabledBtn">
             <RefreshCw />
             Actualiser
           </Button>
@@ -104,7 +104,7 @@
         <div class="grid flex-1 gap-4 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
           <div class="flex flex-col gap-4">
             <GlobalDataComponent  v-if="dataMachines" class="w-full" :data="dataMachines" />
-            <CpuComponent :usage="cpuUsage" class="h-full w-full" />
+            <CpuComponent :usage="cpuUsage" :cpuHearts="dataCpus" class="h-full w-full" />
           </div>
           <div class="flex flex-col gap-4">
             <MemoryComponent :usage="memoryUsage" class="w-full" v-if="dataMemories" :data="dataMemories" />
@@ -155,6 +155,7 @@ const syncOnlineStatus = () => {
     isOnline.value = navigator.onLine
   }
 }
+const disabledBtn=ref(false);
 const { data, loading, error, fetchLatest, dataMachines, dataNetworks, dataDisks, dataMemories, dataCpus } = useMonitor()
 
 onMounted(async () => {
@@ -187,6 +188,31 @@ const statusDotClass = computed(() =>
     : 'bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.75)]',
 )
 
+const cpuHearts = computed(() => {
+  const cpus = (dataCpus.value ?? []) as Array<Record<string, unknown>>
+
+  const enriched = cpus.map((cpu) => {
+    const usage = Number(cpu?.usage)
+
+    return {
+      id: cpu.id,
+      nom_cpu: cpu.nom_cpu,
+      usage: Number.isFinite(usage)
+        ? Number(Math.min(100, Math.max(0, usage)).toFixed(2))
+        : 0,
+      utilisation: cpu.utilisation,
+      total_usage: cpu.total_usage,
+    }
+  })
+
+  const mid = Math.ceil(enriched.length / 2)
+
+  return [
+    enriched.slice(0, mid),
+    enriched.slice(mid),
+  ]
+})
+
 const cpuUsage = computed(() => {
   const cpus = (dataCpus.value ?? []) as Array<Record<string, unknown>>
 
@@ -194,18 +220,24 @@ const cpuUsage = computed(() => {
     return 0
   }
 
-  const firstTotalUsage = Number(cpus[0]?.total_usage)
-  if (Number.isFinite(firstTotalUsage)) {
-    return Math.min(100, Math.max(0, firstTotalUsage))
-  }
+ 
 
   const average = cpus.reduce((sum, cpu) => sum + Number(cpu?.usage || 0), 0) / cpus.length
-  return Math.min(100, Math.max(0, average))
+  return Number(average.toFixed(2));
 })
 
 const memoryUsage = computed(() => {
   const memory = (dataMemories.value ?? null) as Record<string, unknown> | null
   const value = Number(memory?.usage_percent)
-  return Number.isFinite(value) ? Math.min(100, Math.max(0, value)) : 0
+  return Number.isFinite(value) ? Math.min(100, Math.max(0, value)).toFixed(2) : 0
 })
+
+const refresh = () => {
+  fetchLatest()
+  disabledBtn.value=true;
+  setTimeout(() => {
+   disabledBtn.value=false;
+  }, 5000)
+}
+
 </script>

@@ -31,11 +31,11 @@ pub struct GlobalData {
 
 #[derive(Debug, Deserialize,Serialize)]
 pub struct MemoryData {
-    pub total: u64,
-    pub used: u64,
-    pub free: u64,
-    pub total_swap: u64,
-    pub used_swap: u64,
+    pub total: f64,
+    pub used: f64,
+    pub free: f64,
+    pub total_swap: f64,
+    pub used_swap: f64,
 }
 
 #[derive(Debug, Deserialize,Serialize)]
@@ -104,10 +104,11 @@ pub async fn insert_to_db(
     .bind(&receive_metrics.global_data.version_systeme)
     .fetch_one(&mut *tx)
     .await
-    .map_err(|err| {
-        let msg = format!("DB error: {}", err);
-        (axum::http::StatusCode::INTERNAL_SERVER_ERROR, msg)
-    })?;
+   .map_err(|err| {
+    let msg = format!("DB error INSERT metrics: {}", err);
+    println!("❌ {}", msg);  // ← ajoutez ce log
+    (axum::http::StatusCode::INTERNAL_SERVER_ERROR, msg)
+})?;
 
     let machine_id = row.get::<Uuid, _>("id");
 
@@ -150,20 +151,21 @@ pub async fn insert_to_db(
     .bind(cpus)
     .bind(disks)
     .bind(networks)
-    .bind(receive_metrics.memory.used as i64)
-    .bind(receive_metrics.memory.total as i64)
-    .bind(receive_metrics.memory.free as i64)
-    .bind(receive_metrics.memory.total_swap as i64)
-    .bind(receive_metrics.memory.used_swap as i64)
+    .bind(receive_metrics.memory.used)
+    .bind(receive_metrics.memory.total)
+    .bind(receive_metrics.memory.free)
+    .bind(receive_metrics.memory.total_swap)
+    .bind(receive_metrics.memory.used_swap)
     .bind(receive_metrics.global_data.nombre_processeurs as f32)
     .bind(receive_metrics.global_data.uptime as i64)
     .bind(receive_metrics.global_data.nombre_processus as i64)
     .execute(&mut *tx)
     .await
-    .map_err(|err| {
-        let msg = format!("DB error: {}", err);
-        (axum::http::StatusCode::INTERNAL_SERVER_ERROR, msg)
-    })?;
+   .map_err(|err| {
+    let msg = format!("DB error INSERT machine: {}", err);
+    println!("❌ {}", msg);  // ← ajoutez ce log
+    (axum::http::StatusCode::INTERNAL_SERVER_ERROR, msg)
+})?;
 
     tx.commit().await.map_err(|err| {
         let msg = format!("DB error: {}", err);
