@@ -115,41 +115,36 @@ import {
 export interface Network {
   id: string
   interface: string
-  recu: number
-  unit: string
-  transmis: number
+  recu: string
+  transmis: string
 }
 
-const data: Network[] = [
-  {
-    id: 'm5gr84i9',
-    interface: 'eth0',
-    recu: 1024,
-    unit: "Go",
-    transmis: 2048,
-  },
-  {
-    id: '3u1reuv4',
-    interface: 'eth1',
-    recu: 2048,
-    unit: "Go",
-    transmis: 4096,
-  },
-  {
-    id: 'derv1ws0',
-    interface: 'wlan0',
-    recu: 512,
-    unit: "Go",
-    transmis: 1024,
-  },
-  {
-    id: '5kma53ae',
-    interface: 'lo',
-    recu: 0,
-    unit: "Go",
-    transmis: 0,
-  },
-]
+type BackendNetwork = {
+  received: number
+  interface: string
+  transmitted: number
+}
+
+const props = defineProps<{
+  data: BackendNetwork[]
+}>()
+
+const formatBytes = (bytes: number) => {
+  if (bytes === 0) return '0 B';
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+const networkData = computed<Network[]>(() => {
+  return props.data.map((net, index) => ({
+    id: `net-${index}`,
+    interface: net.interface,
+    recu: formatBytes(net.received),
+    transmis: formatBytes(net.transmitted),
+  }))
+})
 
 const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
   payment: {
@@ -184,7 +179,7 @@ const columns: ColumnDef<Network>[] = [
       }, () => ['Reçu', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
     },
     cell: ({ row }) => h('div', { class: 'grid w-full grid-cols-[minmax(0,1fr)_1.25rem] items-center justify-center gap-2 text-center' }, [
-      h('span', { class: 'truncate' }, `${row.getValue('recu')} ${row.original.unit}`),
+      h('span', { class: 'truncate' }, row.getValue('recu')),
       h(CircleArrowDown, {
         size: 20,
         color: '#10c9ea',
@@ -202,7 +197,7 @@ const columns: ColumnDef<Network>[] = [
       }, () => ['Transmis', h(ArrowUpDown, { class: 'ml-2 h-4 w-4' })])
     },
     cell: ({ row }) => h('div', { class: 'grid w-full grid-cols-[minmax(0,1fr)_1.25rem] items-center justify-center gap-2 text-center' }, [
-      h('span', { class: 'truncate' }, `${row.getValue('transmis')} ${row.original.unit}`),
+      h('span', { class: 'truncate' }, row.getValue('transmis')),
       h(CircleArrowUp, {
         size: 20,
         color: '#9534e5',
@@ -220,7 +215,7 @@ const columnVisibility = ref<VisibilityState>({})
 const expanded = ref<ExpandedState>({})
 
 const table = useVueTable({
-  data,
+  get data() { return networkData.value },
   columns,
   getCoreRowModel: getCoreRowModel(),
   getPaginationRowModel: getPaginationRowModel(),
