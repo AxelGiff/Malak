@@ -95,12 +95,24 @@ export function useMonitor() {
     }))
   }
 
-  const fetchLatest = async () => {
+  const fetchMachines = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/machines')
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      return await response.json()
+    } catch (err) {
+      console.error(err)
+      return []
+    }
+  }
+
+  const fetchLatest = async (hostname = null) => {
     loading.value = true
     error.value = null
+    const url = hostname ? `http://localhost:8000/metrics/latest/${hostname}` : 'http://localhost:8000/metrics/latest'
 
     try {
-      const response = await fetch('http://localhost:8000/metrics/latest')
+      const response = await fetch(url)
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`)
@@ -122,11 +134,12 @@ export function useMonitor() {
     }
   }
 
-return {
+  return {
     data,
     loading,
     error,
     fetchLatest,
+    fetchMachines,
     dataMachines,
     dataNetworks,
     dataDisks,

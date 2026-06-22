@@ -68,43 +68,51 @@ import { MoveRight } from '@lucide/vue'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 
-type DiskRow = {
-  id: string
-  name: string
-  fileSystem: string
-  utilisation: number
-  percentLabel: string
-  used: string
-  total: string
-  free: string
-  progressClass: string
-  percentClass: string
+type BackendDisk = {
+  nom_disque: string
+  file_system: string
+  espace_libre: number
+  taille_totale: number
+  espace_utilise: number
+  pourcentage_utilisation: number
 }
 
-const disks: DiskRow[] = [
-  {
-    id: 'c-drive',
-    name: '(C:)',
-    fileSystem: 'NTFS',
-    utilisation: 94.39,
-    percentLabel: '94.39%',
-    used: '235.11 Go',
-    total: '249.08 Go',
-    free: '13.97 Go libres',
-    progressClass: 'bg-red-500',
-    percentClass: 'text-red-500',
-  },
-  {
-    id: 'd-drive',
-    name: 'vol (D:)',
-    fileSystem: 'NTFS',
-    utilisation: 88.71,
-    percentLabel: '88.71%',
-    used: '887.25 Go',
-    total: '1.00 To',
-    free: '112.93 Go libres',
-    progressClass: 'bg-orange-500',
-    percentClass: 'text-orange-400',
-  },
-]
+const props = defineProps<{
+  data: BackendDisk[]
+}>()
+
+const formatBytes = (bytes: number) => {
+  if (bytes === 0) return '0 B';
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+const getProgressClass = (utilisation: number) => {
+  if (utilisation >= 90) return 'bg-red-500';
+  if (utilisation >= 70) return 'bg-orange-500';
+  return 'bg-sky-500';
+}
+
+const getPercentClass = (utilisation: number) => {
+  if (utilisation >= 90) return 'text-red-500';
+  if (utilisation >= 70) return 'text-orange-400';
+  return 'text-sky-500';
+}
+
+const disks = computed<DiskRow[]>(() => {
+  return props.data.map((disk, index) => ({
+    id: `disk-${index}`,
+    name: disk.nom_disque || 'Disque local',
+    fileSystem: disk.file_system,
+    utilisation: disk.pourcentage_utilisation,
+    percentLabel: `${disk.pourcentage_utilisation.toFixed(2)}%`,
+    used: formatBytes(disk.espace_utilise),
+    total: formatBytes(disk.taille_totale),
+    free: `${formatBytes(disk.espace_libre)} libres`,
+    progressClass: getProgressClass(disk.pourcentage_utilisation),
+    percentClass: getPercentClass(disk.pourcentage_utilisation),
+  }))
+})
 </script>

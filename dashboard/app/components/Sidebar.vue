@@ -64,25 +64,13 @@
           <h1 class="text-2xl font-semibold ">Tableau de bord</h1>
         </div>
         <div class=" flex items-center gap-2 px-4">
-<Select>
+<Select v-model="selectedMachine" @update:model-value="onMachineChange">
     <SelectTrigger>
       <SelectValue placeholder="Sélectionner une machine" />
     </SelectTrigger>
     <SelectContent>
-      <SelectItem value="apple">
-        DESKTOP-UID
-      </SelectItem>
-      <SelectItem value="banana">
-        DESKTOP-d
-      </SelectItem>
-      <SelectItem value="blueberry">
-        Blueberry
-      </SelectItem>
-      <SelectItem value="grapes">
-        Grapes
-      </SelectItem>
-      <SelectItem value="pineapple">
-        Pineapple
+      <SelectItem v-for="machine in machines" :key="machine.id" :value="machine.hostname">
+        {{ machine.hostname }}
       </SelectItem>
     </SelectContent>
   </Select>
@@ -108,8 +96,9 @@
           </div>
           <div class="flex flex-col gap-4">
             <MemoryComponent :usage="memoryUsage" class="w-full" v-if="dataMemories" :data="dataMemories" />
-            <DiskComponent class="w-full" />
-            <NetworkComponent class="w-full" />
+<DiskComponent v-if="dataDisks" class="w-full" :data="dataDisks" />
+<NetworkComponent v-if="dataNetworks" class="w-full" :data="dataNetworks" />
+
           </div>
         </div>
       </div>
@@ -149,32 +138,31 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
   import { useMonitor } from '@/composables/useMonitor'
 
 const isOnline = ref(true)
-const machines = ref([])
 const syncOnlineStatus = () => {
   if (typeof navigator !== 'undefined') {
     isOnline.value = navigator.onLine
   }
 }
 const disabledBtn=ref(false);
-const { data, loading, error, fetchLatest, dataMachines, dataNetworks, dataDisks, dataMemories, dataCpus } = useMonitor()
+const machines = ref([]);
+const selectedMachine = ref('');
+const { data, loading, error, fetchLatest, fetchMachines, dataMachines, dataNetworks, dataDisks, dataMemories, dataCpus } = useMonitor()
 
 onMounted(async () => {
   syncOnlineStatus()
   window.addEventListener('online', syncOnlineStatus)
   window.addEventListener('offline', syncOnlineStatus)
 
-
-  const result = await fetchLatest()
-  console.log('Réponse API :', result)
-  console.log('Data ref :', data.value)
-  console.log('Machine :', dataMachines.value)
-  console.log('CPUs :', dataCpus.value)
-  console.log('Mémoire :', dataMemories.value)
-  console.log('Disques :', dataDisks.value)
-  console.log('Réseaux :', dataNetworks.value)
-
-
+  machines.value = await fetchMachines();
+  if (machines.value.length > 0) {
+      selectedMachine.value = machines.value[0].hostname;
+      await fetchLatest(selectedMachine.value);
+  }
 })
+
+const onMachineChange = async (hostname) => {
+    await fetchLatest(hostname);
+}
 onBeforeUnmount(() => {
   window.removeEventListener('online', syncOnlineStatus)
   window.removeEventListener('offline', syncOnlineStatus)
@@ -233,7 +221,7 @@ const memoryUsage = computed(() => {
 })
 
 const refresh = () => {
-  fetchLatest()
+  fetchLatest(selectedMachine.value)
   disabledBtn.value=true;
   setTimeout(() => {
    disabledBtn.value=false;
