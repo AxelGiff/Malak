@@ -1,0 +1,115 @@
+<template>
+  <SidebarProvider>
+    <Sidebar class="text-lg">
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton size="lg" >
+              <View class="h-8 w-8" color="purple"  />
+              <div class="grid flex-1 text-left text-2xl leading-tight">
+                <span class="truncate font-semibold text-white">ARGOS</span>
+                <span class="truncate text-xs">Monitoring</span>
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Vue d'ensemble</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton as-child>
+                  <a href="/monitor">
+                    <LayoutDashboard /> <span> Dashboard</span>
+                  </a>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <hr class="w-3/4 mx-4 border border-gray-200" />
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton as-child>
+                  <a href="/monitor/machines">
+                     <Monitor class="text-white" /> <span class="text-white"> Machines</span>
+                  </a>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter />
+      <SidebarRail />
+    </Sidebar>
+    <SidebarInset>
+      <header class="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+         
+        <div class="flex items-center gap-2 px-4">
+          <SidebarTrigger class="-ml-1 text-white" />
+        </div>
+         <div class="text-white">
+          <h1 class="text-2xl font-semibold ">Machines</h1>
+        </div>
+      
+            <div class="ml-auto flex items-center gap-2 px-4">
+           <Button class="cursor-pointer" variant="outline" @click="refresh" size="sm" :disabled="disabledBtn">
+            <RefreshCw />
+            Actualiser
+          </Button>
+        </div>
+
+      </header>
+      <div class="flex flex-1 flex-col gap-4 p-4 pt-0">
+        <MachinesList :machines="machines" />
+      </div>
+    </SidebarInset>
+  </SidebarProvider>
+</template>
+
+<script setup lang="ts">
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarTrigger,
+} from '@/components/ui/sidebar'
+import MachinesList from '@/components/MachinesList.vue'
+import { RefreshCw, LayoutDashboard, Monitor, View } from '@lucide/vue'
+import { Button } from '@/components/ui/button'
+import { onMounted, ref } from 'vue'
+import { useMonitor } from '@/composables/useMonitor'
+
+const machines = ref([]);
+const { fetchMachines, fetchLatest } = useMonitor()
+const disabledBtn=ref(false);
+
+onMounted(async () => {
+  machines.value = await fetchMachines();
+})
+
+const refresh = async () => {
+disabledBtn.value=true;
+
+  await fetchLatest();
+  setTimeout(() => {
+   disabledBtn.value=false;
+  }, 5000)}
+
+</script>

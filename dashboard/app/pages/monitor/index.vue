@@ -1,5 +1,3 @@
-
-
 <template>
   <Sidebar />
 </template>

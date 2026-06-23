@@ -5,9 +5,9 @@
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" >
-                    <View color="orange"  />
+                    <View  color="purple"  />
              <div class="grid flex-1 text-left text-2xl leading-tight">
-                <span class="truncate font-semibold text-amber-400">Argus</span>
+                <span class="truncate font-semibold">ARGOS</span>
                 <span class="truncate text-xs">Monitoring</span>
               </div>
             </SidebarMenuButton>
@@ -20,11 +20,9 @@
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                
                 <SidebarMenuButton as-child>
-                  
-                  <a href="#">
-              <LayoutDashboard />    <span> Dashboard</span>
+                  <a href="/monitor">
+                    <LayoutDashboard /> <span> Dashboard</span>
                   </a>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -37,16 +35,13 @@
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton as-child>
-                  <a href="#">
-                     <Monitor />  <span> Machines</span>
-                  </a>
-                </SidebarMenuButton>
-                 <SidebarMenuButton as-child>
-                  <a href="#">
-                  
+                  <a href="/monitor/machines">
+                     <Monitor class="text-white" /> <span class="text-white"> Machines</span>
                   </a>
                 </SidebarMenuButton>
               </SidebarMenuItem>
+             
+            
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

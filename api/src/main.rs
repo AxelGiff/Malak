@@ -46,6 +46,7 @@ async fn main() {
     .route("/", get(|| async { "Hello, World!" }))
     .route("/metrics", post(insertPayload::insert_to_db))
     .route("/metrics/latest", get(models::get_latest_metrics))
+    .route("/metrics/latest/{hostname}", get(models::get_latest_metrics_from_machine))
     .route("/machines", get(models::get_machines))
     .with_state(state)
     .layer(cors);

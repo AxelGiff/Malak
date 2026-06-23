@@ -61,10 +61,13 @@
     </div>
 
     <div class="mt-auto flex items-end pt-3">
-      <Button class="flex w-full cursor-pointer justify-between rounded-xl bg-slate-900/80 px-4 py-2 text-sm font-medium text-slate-100 hover:bg-slate-900" variant="secondary">
-    Voir toutes les interfaces
-    <MoveRight /> 
-  </Button>
+      <Button class="p-0 w-full cursor-pointer" variant="secondary" as-child>
+        <a href="/monitor/networks" class="flex w-full items-center justify-start gap-2 rounded-xl bg-slate-900/80 px-4 py-2 text-sm font-medium text-slate-100 hover:bg-slate-900">
+          <span>Voir toutes les interfaces</span>
+                    <MoveRight class="h-4 w-4" />
+
+        </a>
+      </Button>
     </div>
   </div>
 </template>

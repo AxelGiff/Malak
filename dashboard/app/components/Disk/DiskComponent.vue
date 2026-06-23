@@ -54,9 +54,12 @@
     </div>
 
     <div class="mt-auto pt-4">
-      <Button class="w-full cursor-pointer  justify-between rounded-xl bg-slate-900/80 px-4 py-2 text-sm font-medium text-slate-100 hover:bg-slate-900" variant="secondary">
-        <span>Voir tous les disques</span>
-        <MoveRight class="h-4 w-4" />
+      <Button class="flex w-full p-0 cursor-pointer" variant="secondary" as-child>
+        <a href="/monitor/disks" class="flex w-full items-center justify-start gap-2 rounded-xl bg-slate-900/80 px-4 py-2 text-sm font-medium text-slate-100 hover:bg-slate-900">
+          <span>Voir tous les disques</span>
+                    <MoveRight class="h-4 w-4" />
+
+        </a>
       </Button>
     </div>
   </div>
