@@ -5,6 +5,14 @@ use serde_json::Value;
 use sqlx::Row;
 use uuid::Uuid;
 use axum::extract::Path;
+use argon2::{
+    password_hash::{
+        rand_core::OsRng,
+        PasswordHasher, SaltString
+    },
+    Argon2
+};
+
 
 #[derive(Debug, Serialize)]
 pub struct MachineInfo {
@@ -32,6 +40,9 @@ pub struct LatestMetricsInfo {
     pub nombre_processus: i64,
     pub created_at: String,
 }
+
+
+
 
 pub async fn get_latest_metrics(
     State(state): State<AppState>,
@@ -200,3 +211,4 @@ pub async fn get_machines(
 
     Ok(Json(machines))
 }
+

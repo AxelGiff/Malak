@@ -1,9 +1,19 @@
 use crate::db::DbPool;
 use axum::{extract::State, Json};
-use serde::{Deserialize, Serialize};
+use serde::{Serialize, Deserialize};
 use serde_json::{json, Value};
 use sqlx::Row;
 use uuid::Uuid;
+use argon2::{
+    password_hash::{
+        rand_core::OsRng,
+        PasswordHasher, SaltString
+    },
+    Argon2
+};
+use argon2::password_hash::PasswordHash;
+use axum::http::StatusCode;
+use argon2::PasswordVerifier;
 
 #[derive(Clone)]
 pub struct AppState {
@@ -18,6 +28,7 @@ pub struct MetricsPayload {
     pub disks: Vec<DiskData>,
     pub networks: Vec<NetworkInfo>,
 }
+
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct GlobalData {
@@ -67,6 +78,111 @@ pub struct NetworkInfo {
 }
 
 
+#[derive(Debug, Deserialize,Serialize)]
+pub struct UserData {
+    pub email: String,
+    pub password: String,
+    pub created_at: Option<String>,
+}
+
+pub async fn check_user(
+    State(state): State<AppState>,
+    Json(receive_users): Json<UserData>,
+) -> Result<Json<Value>, (StatusCode, String)> {
+
+    let row = sqlx::query(
+        r#"
+        SELECT id, email, password_hash
+        FROM users
+        WHERE email = $1
+        "#
+    )
+    .bind(&receive_users.email)
+    .fetch_optional(&state.db)
+    .await
+    .map_err(|err| (
+        StatusCode::INTERNAL_SERVER_ERROR,
+        format!("DB error: {}", err)
+    ))?;
+
+    // user not found
+    let row = match row {
+        Some(r) => r,
+        None => return Err((StatusCode::UNAUTHORIZED, "User not found".to_string())),
+    };
+
+    let password_hash: String = row.get("password_hash");
+
+    let parsed_hash = PasswordHash::new(&password_hash)
+        .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, "Invalid hash format".to_string()))?;
+
+    Argon2::default()
+        .verify_password(receive_users.password.as_bytes(), &parsed_hash)
+        .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid password".to_string()))?;
+
+    let body = json!({
+        "status": "success",
+    });
+
+    Ok(Json(body))
+}
+
+pub async fn insert_user(
+    State(state): State<AppState>,
+    Json(receive_users): Json<UserData>,
+) -> Result<Json<Value>, (axum::http::StatusCode, String)> {
+    let id = Uuid::new_v4();
+    let mut tx = state.db.begin().await.map_err(|err| {
+        let msg = format!("DB error: {}", err);
+        (axum::http::StatusCode::INTERNAL_SERVER_ERROR, msg)
+    })?;
+
+    let salt = SaltString::generate(&mut OsRng);
+    let argon2 = Argon2::default();
+    let password_hash = argon2
+        .hash_password(receive_users.password.as_bytes(), &salt)
+        .map_err(|err| (axum::http::StatusCode::INTERNAL_SERVER_ERROR, err.to_string()))?
+        .to_string();
+
+
+    sqlx::query(
+        r#"
+        INSERT INTO users (
+            id,
+            email,
+            password_hash,
+            created_at
+        )
+
+        VALUES ($1,$2,$3,NOW())
+        "#,
+    )
+    .bind(id)
+    .bind(&receive_users.email)
+    .bind(&password_hash)
+    .execute(&mut *tx)
+    .await
+   .map_err(|err| {
+    let msg = format!("DB error INSERT user: {}", err);
+    println!("❌ {}", msg);
+    (axum::http::StatusCode::INTERNAL_SERVER_ERROR, msg)
+})?;
+
+    tx.commit().await.map_err(|err| {
+        let msg = format!("DB error commit: {}", err);
+        println!("❌ {}", msg);
+        (axum::http::StatusCode::INTERNAL_SERVER_ERROR, msg)
+    })?;
+
+    let body = json!({
+        "status": "success",
+    });
+
+    Ok(Json(body))
+}
+
+
+
 pub async fn insert_to_db(
     State(state): State<AppState>,
     Json(receive_metrics): Json<MetricsPayload>,
@@ -106,7 +222,7 @@ pub async fn insert_to_db(
     .await
    .map_err(|err| {
     let msg = format!("DB error INSERT metrics: {}", err);
-    println!("❌ {}", msg);  // ← ajoutez ce log
+    println!("❌ {}", msg);
     (axum::http::StatusCode::INTERNAL_SERVER_ERROR, msg)
 })?;
 
@@ -163,15 +279,15 @@ pub async fn insert_to_db(
     .await
    .map_err(|err| {
     let msg = format!("DB error INSERT machine: {}", err);
-    println!("❌ {}", msg);  // ← ajoutez ce log
+    println!("❌ {}", msg);
     (axum::http::StatusCode::INTERNAL_SERVER_ERROR, msg)
 })?;
 
     tx.commit().await.map_err(|err| {
-        let msg = format!("DB error: {}", err);
+        let msg = format!("DB error commit: {}", err);
+        println!("❌ {}", msg);
         (axum::http::StatusCode::INTERNAL_SERVER_ERROR, msg)
     })?;
-
 
     let body = json!({
         "status": "success",

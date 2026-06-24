@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS metrics;
 DROP TABLE IF EXISTS machine;
+DROP TABLE IF EXISTS users;
+
 
 CREATE TABLE machine(
     id UUID PRIMARY KEY,
@@ -23,5 +25,12 @@ CREATE TABLE metrics(
     nombre_processeurs REAL NOT NULL,
     uptime BIGINT NOT NULL,
     nombre_processus BIGINT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE users (
+    id UUID PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT NOW()
 );

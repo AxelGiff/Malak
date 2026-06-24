@@ -46,7 +46,15 @@
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+        <div class="flex items-center gap-2 p-2">
+          <div class="h-8 w-8 rounded-full bg-gray-500 flex items-center justify-center text-white">U</div>
+          <div class="flex flex-col">
+            <span class="text-sm font-medium">Utilisateur</span>
+            <span class="text-xs text-gray-500">user@example.com</span>
+          </div>
+        </div>
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
     <SidebarInset>
